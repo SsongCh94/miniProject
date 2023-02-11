@@ -58,11 +58,16 @@
                 url: "/login",
                 data: {ID: ID,PW: PW},
                 success: function (response) {
-                    let token=response.token
-                    console.log(response.name)
-                    $.cookie('token', token);
-                    window.location.href='/'
+                    if(response["msg"]!=null){
+                        alert(response['msg'])
+                    }else {
+                        let token = response.token
+                        let name = response.name
+                        console.log(response.name)
+                        $.cookie('token', token);
 
+                        window.location.href = '/'
+                    }
 
                 }
 

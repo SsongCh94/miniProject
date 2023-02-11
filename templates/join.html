@@ -77,6 +77,16 @@
             })
         }
     }
+    function ID_CHECK(){
+            let ID = $('#join_ID').val()
+            $.ajax({
+                type: "POST",
+                url: "/ID_CHECK",
+                data: {ID: ID,},
+                success: function (response) {
+                    alert(response['msg'])
+                }}
+            )}
     </script>
 
 </head>
@@ -85,9 +95,10 @@
         <h1><b>Sign</b></h1>
         <div class="sign_box1">
             <div class="input-group mb-3">
-                <span class="input-group-text">아이디</span>
+                <span class="input-group-text">이메일</span>
                 <input id="join_ID" type="text" class="form-control" aria-label="Sizing example input"
                        aria-describedby="inputGroup-sizing-default">
+                <button onclick="ID_CHECK()">중복 확인</button>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" >패스워드</span>

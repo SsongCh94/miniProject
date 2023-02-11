@@ -7,7 +7,7 @@ function logout(){
  $(function() {
     let name = $('h1').attr('class');
     console.log(name)
-    if(name==""){
+    if(name==undefined){
          $('#join').show()
         $('#login').show()
         $('#logout').hide()

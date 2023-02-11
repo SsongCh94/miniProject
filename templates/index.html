@@ -139,24 +139,13 @@
 
     <script>
 
-        function mood_save() {
-            let emt = $('#emt').val()
-            let comment = $('#comment').val()
-            let music = $('#music').val()
-
-            $.ajax({
-            type: "POST",
-            url: "/list",
-            data: {emt_give:emt, comment_give:comment, music_give:music},
-            success: function (response) {
-                alert(response['msg'])
-                window.location.reload()
-            }
-            });
-        }
-
         $(document).ready(function () {
             ranking();
+            let num_list = show_mood()
+            for (let i = 0; i < num_list.length; i++) {
+                show_comment(num_list[i])
+            }
+            console.log(num_list[0])
         });
 
         function ranking() {

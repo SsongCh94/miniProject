@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <style>
+        .sign_box {
+            width: 700px;
+            max-width: 95%;
+            height: 500px;
+
+            box-shadow: 0px 0px 2px 0px gray;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            padding: 40px;
+
+            color: purple;
+        }
+        .sign_box1 {
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            width: 250px;
+            height: 50px;
+            border-radius: 20px;
+            margin: 30px auto 50px auto;
+
+        }
+        .btn > button{
+            width: 250px;
+            height: 50px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        function join() {
+            let ID = $('#join_ID').val()
+            let PW = $('#join_PW').val()
+            let name = $('#join_name').val()
+            let PWCHECK = $('#join_PWCHECK').val()
+            let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+            let passwordRules = new RegExp(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/);
+            if(regex.test(ID)==false){
+                alert("이메일 형식으로 입력해주세요")
+            }else if(passwordRules.test(PW)==false){
+                alert("하나 이상의 문자,숫자,기호를 입력해주세요")
+            }else if(PWCHECK!=PW) {
+                alert("비밀번호가 같지 않습니다.")
+            }else{
+            $.ajax({
+                type: "POST",
+                url: "/join",
+                data: {ID: ID,PW: PW,name: name},
+                success: function (response) {
+                    alert(response)
+                    window.location.href='/'
+                }
+
+
+            })
+        }
+    }
+    </script>
+
+</head>
+<body>
+    <div class="sign_box">
+        <h1><b>Sign</b></h1>
+        <div class="sign_box1">
+            <div class="input-group mb-3">
+                <span class="input-group-text">아이디</span>
+                <input id="join_ID" type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" >패스워드</span>
+                <input id="join_PW" type="password" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default">
+            </div>
+             <div class="input-group mb-3">
+                <span class="input-group-text" >패스워드 확인</span>
+                <input id="join_PWCHECK" type="password" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" >닉네임</span>
+                <input id="join_name" type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="btn">
+                <button onclick="join()" style="background-color: purple; border-color: purple; color : white">회원가입</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

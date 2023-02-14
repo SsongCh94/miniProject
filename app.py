@@ -1,15 +1,18 @@
+
 from datetime import timedelta, datetime
 
-from flask import Flask, render_template, jsonify, request
+
+from flask import Flask, render_template, request, jsonify
+
 app: Flask = Flask(__name__)
-# app = Flask(__name__)
+
 from pymongo import MongoClient
-import certifi
-ca = certifi.where()
-client = MongoClient('mongodb+srv://test:sparta@cluster0.hgy8cub.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
-db = client.dbsparta
+client = MongoClient()
+db = client.izren
 import hashlib
 import jwt
+import os
+
 
 @app.route('/')
 def home():
@@ -64,20 +67,22 @@ def login():
 
     user = db.users.find_one({'ID':ID,'PW':PWencode}, {'_id': False})
     print(user)
+
     if user == None:
         return jsonify({'msg': "아이디,비밀번호를 확인해주세요"})
     else:
+        name = (user['name'])
         payload = {
             "ID": ID,
-            "name": user['name'],
+            "name": name,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
-        print(user['name'])
+    if os.environ.get('HOME') == None:
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        print(token)
-        payload = jwt.decode(token, SECRET_KEY, algorithms='HS256')
-        print(payload)
-        return jsonify({'token': token, 'LOGIN_ID': ID, 'name': (user['name'])})
+    else:
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256").decode('utf-8')
+    print(os.environ.get)
+    return jsonify({'response': 'success', 'token': token})
 
 
 @app.route("/ID_CHECK", methods=["POST"])
@@ -172,4 +177,4 @@ def text_get():
 
 
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5005, debug=True)
+   app.run('0.0.0.0', port=5000, debug=True)

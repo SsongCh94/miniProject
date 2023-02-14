@@ -52,7 +52,7 @@
     function login() {
             let ID = $('#join_ID').val()
             let PW = $('#join_PW').val()
-
+            console.log(ID,PW)
             $.ajax({
                 type: "POST",
                 url: "/login",
@@ -62,15 +62,15 @@
                         alert(response['msg'])
                     }else {
                         let token = response.token
-                        let name = response.name
+                        alert(token)
                         console.log(response.name)
-                        $.cookie('token', token);
-
+                        $.cookie('token', response['token']);
                         window.location.href = '/'
                     }
 
+                }, error: function(request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 }
-
             })
         }
 

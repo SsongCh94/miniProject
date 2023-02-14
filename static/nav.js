@@ -6,13 +6,14 @@ function logout(){
 
  $(function() {
     let name = $('h1').attr('class');
-    console.log(name)
-    if(name==undefined){
-         $('#join').show()
+    let token = document.cookie
+    console.log(token)
+    if(token===""||token===undefined||token===null){
+        $('#join').show()
         $('#login').show()
         $('#logout').hide()
     } else{
-         $('#join').hide()
+        $('#join').hide()
         $('#login').hide()
     }
 
